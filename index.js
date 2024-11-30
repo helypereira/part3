@@ -8,6 +8,7 @@ app.get("/api/personas", (req, res) => {
     res.send(people);
 });
 
+// step 2
 app.get("/info", (req, res) => {
     const ids = people.map(person => person.id);
     const requestTime = new Date();
