@@ -18,8 +18,15 @@ app.get("/info", (req, res) => {
 app.get("/api/persons/:id", (req, res) => {
     const id = parseInt(req.params.id);
     const person = people.find(person => person.id === id);
-    person ? res.send(person) : res.status(404).send({message: 'person no found'})
+    person ? res.json(person) : res.status(204).send({message: 'contact no found'})
 })
+
+app.delete("/api/persons/delete/:id", (req, res) => {
+    const id = Number(req.params.id);
+    people.filter(person => person.id !== id)
+    res.status(204).end();
+});
+
 
 
 app.listen(port, ()=> console.log(`Server running on port ${port}`)); 
