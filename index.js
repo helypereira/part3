@@ -2,6 +2,8 @@ import express from 'express';
 import people from './contact.js';
 
 const app = express();
+app.use(express.json());
+
 const port = 3001;
 
 app.get("/api/persons", (req, res) => {
@@ -23,12 +25,19 @@ app.get("/api/persons/:id", (req, res) => {
 
 app.delete("/api/persons/delete/:id", (req, res) => {
     const id = Number(req.params.id);
-    people.filter(person => person.id !== id)
+    people.filter(...person => person.id !== id)
     res.status(204).end();
 });
 
 
+app.post("/api/persons", (req, res) => {
+
+    const maxId = Math.max(...people.map(pers => pers.id));
+    const updateId = maxId+1;
+    const {name, number} = req.body;
+    const newPerson = { id:updateId, name, number };
+    people.push(newPerson);
+    res.status(201).json(newPerson);
+})
 
 app.listen(port, ()=> console.log(`Server running on port ${port}`)); 
-
-
