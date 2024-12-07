@@ -1,7 +1,7 @@
 {
   "name": "phonebook",
   "version": "1.0.0",
-  "description": "3.1 backend phonebook step 1",
+  "description": "Backend phonebook",
   "main": "index.js",
   "type": "module",
   "scripts": {

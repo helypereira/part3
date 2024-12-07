@@ -31,13 +31,26 @@ app.delete("/api/persons/delete/:id", (req, res) => {
 
 
 app.post("/api/persons", (req, res) => {
+    const { name, number } = req.body;
+
+    if (!name || !number) {
+        return res.status(400).json({ message: 'Name and number are required' });
+    }
+
+    const nameExists = people.some(p => p.name === name);
+    if (nameExists) {
+        return res.status(409).json({ message: 'Name must be unique' });
+    }
 
     const maxId = Math.max(...people.map(pers => pers.id));
-    const updateId = maxId+1;
-    const {name, number} = req.body;
-    const newPerson = { id:updateId, name, number };
+    const newId = maxId + 1;
+
+    const newPerson = { id: newId, name, number };
+
     people.push(newPerson);
+
     res.status(201).json(newPerson);
-})
+});
+
 
 app.listen(port, ()=> console.log(`Server running on port ${port}`)); 
