@@ -27,4 +27,4 @@ let people = [
 ]
 
 
-export default people
+export default people;
