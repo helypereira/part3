@@ -1,23 +1,27 @@
 import express from 'express';
 import people from './contact.js';
 import morgan from 'morgan';
+import cors from 'cors';
+
+let contacts = people;
+
 
 const app = express();
-// app.use(morgan('tiny'));
+app.use(cors());
 
 morgan.token('body', (req, res) => JSON.stringify(req.body));
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
-
 app.use(express.json());
+
 
 const port = 3001;
 
 app.get("/api/persons", (req, res) => {
-    res.json(people);
+    res.json(contacts);
 });
 
 app.get("/info", (req, res) => {
-    const ids = people.map(person => person.id);
+    const ids = contacts.map(person => person.id);
     const requestTime = new Date();
     res.send(`Phonebook has info for ${ids.length} people <br/>
         ${requestTime}`);
@@ -25,15 +29,24 @@ app.get("/info", (req, res) => {
 
 app.get("/api/persons/:id", (req, res) => {
     const id = parseInt(req.params.id);
-    const person = people.find(person => person.id === id);
+    const person = contacts.find(person => person.id === id);
     person ? res.json(person) : res.status(404).send({message: 'contact no found'})
 })
 
-app.delete("/api/persons/delete/:id", (req, res) => {
+app.delete("/api/persons/:id", (req, res) => {
     const id = Number(req.params.id);
-    people.filter(person => person.id !== id)
+    const personToDelete = contacts.find(person => person.id === id);
+    
+    if (!personToDelete) {
+        return res.status(404).json({ message: 'Contact not found' });
+    }
+    
+    contacts = contacts.filter(person => person.id !== id);
     res.status(204).end();
 });
+
+
+
 
 
 app.post("/api/persons", (req, res) => {
@@ -43,17 +56,17 @@ app.post("/api/persons", (req, res) => {
         return res.status(400).json({ message: 'Name and number are required' });
     }
 
-    const nameExists = people.some(p => p.name === name);
+    const nameExists = contacts.some(p => p.name === name);
     if (nameExists) {
         return res.status(409).json({ message: 'Name must be unique' });
     }
 
-    const maxId = Math.max(...people.map(pers => pers.id));
+    const maxId = Math.max(...contacts.map(pers => pers.id));
     const newId = maxId + 1;
 
     const newPerson = { id: newId, name, number };
 
-    people.push(newPerson);
+    contacts.push(newPerson);
 
     res.status(201).json(newPerson);
 });

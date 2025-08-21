@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined');
+
+
+h1{
+    font-size: 4.125rem;
+    width: 100%;
+    text-align: center;
+    font-weight: bolder;
+}
+
+.subtitle {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+* {
+    font-family: "Abel", sans-serif;
+    font-weight: 400;
+    font-style: normal; 
+    font-size: 16px;
+}
+
+.successful {
+    background-color: rgb(182, 255, 13);
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    padding: 10px;
+    width: 20%;
+    text-align: center;
+    font-size: 22px;
+    border-radius: 100px;
+}
+
+.unsuccessful {
+    background-color: rgb(255, 13, 78);
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+}
+
+.contactsSection {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+}
+
+.contactsSection h2 {
+    font-size: 32px;
+}
+
+.contactList button{
+    border: none;
+    background: none;
+    color: rgb(126, 126, 126);
+    cursor: pointer;
+    transition: 0.5s;
+    
+}
+
+.contactList button:hover{
+    font-size: 44px;
+    transition: 0.5s;
+    color: red;
+}
+
+.contact {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px dotted;
+    padding: 5px;
+    
+}
+
+.contactList {
+    margin: auto;
+    width: 100%;
+}
+
+.contact span {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Espacio entre icono y texto */
+}
+
+
+button {
+    display: flex;
+    align-items: center;
+}
+
+.filter {
+    margin: auto;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.filter input{
+    padding: 10px 5px;
+    background-color: rgb(218, 218, 218);
+    border: none;
+}
+
+input {
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 10px 5px;
+    
+}
+
+input:focus {
+    background-color: #ffe900;
+
+    outline: none;
+}
+
+
+.container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-evenly;
+
+}
+
+.new button {
+    padding: 10px;
+    border: none;
+    background-color: #ffe900;
+    transition: 0.5s;
+}
+
+.new button:hover {
+
+    background-color: rgb(0, 255, 21);
+    transition: 0.5s;
+}
+
+
+.new input{
+    background-color: gainsboro;
+    border: none;
+}
+
+span.material-symbols-outlined {
+    margin-right: 3px;
+}
+
+
+@media only screen and (max-width: 48rem) {
+    input {
+        width: 100%;
+        padding: 10px 0px 10px 0px;
+    }
+
+    .filter input {
+        padding: 10px 0px 10px 0px;
+        background-color: rgb(218, 218, 218);
+        border: none;
+    }
+    h1 {
+        font-size: 38px;
+    }
+    form.formulario {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+    .contactsSection {
+        display: flex;
+        margin-top: 30px;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .contact {
+        display: flex;
+    }
+    .container {
+        flex-direction: column;
+    }
+    .new {
+        width: 100%;
+    }
+}
+
