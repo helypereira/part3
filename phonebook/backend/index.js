@@ -4,18 +4,15 @@ import morgan from 'morgan';
 import cors from 'cors';
 
 let contacts = people;
-
-
 const app = express();
 app.use(cors());
+
+const PORT = process.env.PORT || 3001;
 
 morgan.token('body', (req, res) => JSON.stringify(req.body));
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
 app.use(express.json());
-app.use(express.static('dist'))
-
-const PORT = process.env.PORT || 3001
-
+app.use(express.static('dist'));
 app.get("/api/persons", (req, res) => {
     res.json(contacts);
 });
@@ -46,6 +43,16 @@ app.delete("/api/persons/:id", (req, res) => {
 });
 
 
+app.post("/api/persons", (req, res) => {
+    try {
+        const { name, number } = req.body;
+        const newContact = { id: contacts.length + 1, name, number };
+        contacts.push(newContact);
+        res.status(201).json(newContact);
+    } catch (error) {
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
 
 
 
