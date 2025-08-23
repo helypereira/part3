@@ -1,6 +1,8 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import connectDB from './utils/config.js';
 import 'dotenv/config';
 import contactsRouter from './routes/contacts.js';
@@ -10,6 +12,9 @@ import errorHandler from './middleware/errorHandler.js';
 console.log('MONGODB_URI:', process.env.MONGODB_URI ? 'Loaded' : 'NOT LOADED');
 console.log('PORT:', process.env.PORT);
 
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 await connectDB(process.env.MONGODB_URI);
 
@@ -25,6 +30,11 @@ app.use(express.static('dist'));
 // Routes
 app.use('/api/persons', contactsRouter);
 app.get('/info', getInfo);
+
+// Serve the frontend for any other route (catch-all)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 
 
 
