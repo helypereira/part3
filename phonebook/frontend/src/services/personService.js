@@ -1,15 +1,13 @@
 import axios from 'axios';
-const baseURL = '/api/persons';
+const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api/contacts';
 
 
 const getAll = () => {
     return (
-        axios
-        .get(baseURL)
-        .then(response => response.data)
-        
+        axios.get(baseURL).then(response => response.data) 
     )
 }
+
 
 
 const createContact = (newContact) => {

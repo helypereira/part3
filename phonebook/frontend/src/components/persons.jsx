@@ -5,7 +5,7 @@ import '../styles/global.css';
 const Persons = ({ persons, onDelete }) => (
     <div className="contactList">
         {persons.map(person => (
-            <div key={person.id} className="contact">
+            <div key={person._id} className="contact">
                 
                     <span>
                         <span className="material-symbols-outlined">account_circle</span>
@@ -15,7 +15,7 @@ const Persons = ({ persons, onDelete }) => (
                         <span className="material-symbols-outlined">call</span>
                         {person.number}
                     </span>
-                    <button onClick={() => onDelete(person.id)}>
+                    <button onClick={() => onDelete(person._id)}>
                         <span className="material-symbols-outlined">delete_forever</span>
                     </button>
                 

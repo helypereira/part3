@@ -41,12 +41,12 @@ const App = () => {
 
   const handleDelete = (id) => {
     if (window.confirm('Are you sure you want to delete this contact?')) {
-      const personToDelete = persons.find(person => person.id === id);
+      const personToDelete = persons.find(person => person._id === id);
       
       personService
         .deleteContact(id)
         .then(() => {
-          setPersons(persons.filter(person => person.id !== id));
+          setPersons(persons.filter(person => person._id !== id));
           setNotification({ 
             message: `${personToDelete.name} deleted successfully!`, 
             classStyle: 'successful' 
@@ -80,9 +80,9 @@ const App = () => {
   if(existingContact){
     if(window.confirm(`${newName} is already in the phonebook. Replace the old number with a new one?`)){
       personService
-        .updateContactNumber(existingContact.id, newContact)
+        .updateContactNumber(existingContact._id, newContact)
         .then(updatedContact => {
-          setPersons(persons.map(person => person.id !== existingContact.id ? person : updatedContact));
+          setPersons(persons.map(person => person._id !== existingContact._id ? person : updatedContact));
           setNewName('');
           setNewNumber('');
           setNotification({ message: `Contact ${updatedContact.name} updated succssfully!`, classStyle: 'successful' });
@@ -98,7 +98,6 @@ const App = () => {
     personService
       .createContact(newContact)
       .then(response => {
-        //setPersons(persons.concat(response));
         setPersons(prevContact => prevContact.concat(response))
         setNewName('');
         setNewNumber('');
