@@ -1,6 +1,6 @@
 import Contact from '../models/contact.js';
 
-// Obtener todos los contactos
+// Obtain all contacts
 export const getContacts = async (req, res) => {
   try {
     console.log('Fetching contacts from database...');
@@ -13,7 +13,7 @@ export const getContacts = async (req, res) => {
   }
 };
 
-// Obtener un contacto por ID
+// Obtain a contact by ID
 export const getContactById = async (req, res) => {
   try {
     const contact = await Contact.findById(req.params.id);
@@ -27,17 +27,17 @@ export const getContactById = async (req, res) => {
   }
 };
 
-// Crear un nuevo contacto
+// Create a new contact
 export const createContact = async (req, res) => {
   try {
     const { name, number } = req.body;
 
-    // Validación básica
+    // Basic validation
     if (!name || !number) {
       return res.status(400).json({ error: 'Name and number are required' });
     }
 
-    // Verificar si el contacto ya existe
+    // Check if the contact already exists
     const existingContact = await Contact.findOne({ name });
     if (existingContact) {
       return res.status(400).json({ error: 'Contact with this name already exists' });
@@ -57,7 +57,7 @@ export const createContact = async (req, res) => {
   }
 };
 
-// Actualizar un contacto
+// Update a contact
 export const updateContact = async (req, res) => {
   try {
     const { name, number } = req.body;
@@ -80,7 +80,7 @@ export const updateContact = async (req, res) => {
   }
 };
 
-// Eliminar un contacto
+// Delete a contact (3.15)
 export const deleteContact = async (req, res) => {
   try {
     const deletedContact = await Contact.findByIdAndDelete(req.params.id);
@@ -90,14 +90,14 @@ export const deleteContact = async (req, res) => {
     }
 
     console.log(`Contact deleted: ${deletedContact.name}`);
-    res.json(deletedContact); // Devolvemos el contacto eliminado
+    res.json(deletedContact);
   } catch (error) {
     console.error('Error deleting contact:', error);
     res.status(400).json({ error: 'Invalid contact ID' });
   }
 };
 
-// Obtener información sobre la API
+// Obtain information about the API
 export const getInfo = async (req, res) => {
   try {
     const contactCount = await Contact.countDocuments({});
