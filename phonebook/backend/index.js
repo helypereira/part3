@@ -21,7 +21,7 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :b
 app.use(express.json());
 app.use(express.static('dist'));
 
-// Rutas
+// Routes
 app.use('/api/contacts', contactsRouter);
 app.get('/info', getInfo);
 
