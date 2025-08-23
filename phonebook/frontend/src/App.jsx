@@ -106,8 +106,11 @@ const App = () => {
           setNotification({ message: null, classStyle: null });
         }, 3000);
       })
-      .catch(() => {
-        setNotification({message:'Error adding contact', classStyle:'unsuccessful'})
+      .catch(({response}) => {
+        // setNotification({message:'Error adding contact', classStyle:'unsuccessful'})  
+        setNotification({message: `${response.data.error}`, classStyle:'unsuccessful'})
+        setNewName('');
+        setNewNumber('');
       });
   }}
 

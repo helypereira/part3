@@ -26,10 +26,8 @@ h1{
     color: rgb(0, 0, 0);
     font-weight: bold;
     padding: 10px;
-    width: 20%;
     text-align: center;
     font-size: 22px;
-    border-radius: 100px;
 }
 
 .unsuccessful {
