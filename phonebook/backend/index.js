@@ -22,7 +22,7 @@ const app = express();
 app.use(cors());
 const PORT = process.env.PORT || 3001;
 
-morgan.token('body', (req, res) => JSON.stringify(req.body));
+morgan.token('body', (req) => JSON.stringify(req.body));
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
 app.use(express.json());
 app.use(express.static('dist'));

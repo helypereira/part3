@@ -1,4 +1,4 @@
-const errorHandler = (error, request, response, next)=> {
+const errorHandler = (error, response)=> {
 console.error('Error:', error.message)
 if (error.name=== 'CastError'){
 return response.status(400).json({
@@ -22,4 +22,4 @@ error: 'Internal Server Error'
 }
 
 
-export default errorHandler;
+export default errorHandler

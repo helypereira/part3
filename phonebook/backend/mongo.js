@@ -51,7 +51,7 @@ if(name === undefined || number === undefined){
     mongoose.connection.close()
   })
 } else {
-  contact.save().then(result => {
+  contact.save().then(() => {
   console.log(`Added ${name} number ${number} to Phonebook`)
   mongoose.connection.close()
 })
