@@ -73,8 +73,8 @@ const App = () => {
     const existingContact = persons.find(person => person.name === newName);
     const newContact = {
       //id: persons.length +1 ,
-      name: newName,
-      number: newNumber,
+      name: newName.trim(),
+      number: newNumber.trim(),
     };
     
   if(existingContact){
@@ -107,8 +107,8 @@ const App = () => {
         }, 3000);
       })
       .catch(({response}) => {
-        // setNotification({message:'Error adding contact', classStyle:'unsuccessful'})  
-        setNotification({message: `${response.data.error}`, classStyle:'unsuccessful'})
+        setNotification({message: `Error ${response.status}: ${response.data.error}`, classStyle:'unsuccessful'})
+        // console.log(response.status)
         setNewName('');
         setNewNumber('');
       });

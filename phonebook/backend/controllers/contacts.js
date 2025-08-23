@@ -28,7 +28,9 @@ export const getContactById = async (req, res, next) => {
 // Create a new contact
 export const createContact = async (req, res, next) => {
   try {
-    const { name, number } = req.body;
+    // const { name, number } = req.body;
+    const name = req.body.name.trim();
+    const number = req.body.number.trim();
 
     // Basic validation
     if (!name || !number) {
@@ -37,8 +39,15 @@ export const createContact = async (req, res, next) => {
 
     // Check if the contact already exists
     const existingContact = await Contact.findOne({ name });
+    
     if (existingContact) {
-      return res.status(400).json({ error: 'Contact with this name already exists' });
+      const updatedContact = await Contact.findByIdAndUpdate(
+        existingContact._id,
+        { name, number },
+        { new: true, runValidators: true }
+      );
+      console.log(`Contact updated: ${updatedContact.name}`);
+      return res.json(updatedContact);
     }
 
     const contact = new Contact({
@@ -59,7 +68,8 @@ export const createContact = async (req, res, next) => {
 // Update a contact
 export const updateContact = async (req, res, next) => {
   try {
-    const { name, number } = req.body;
+    const name = req.body.name?.trim();
+    const number = req.body.number?.trim();
 
     const updatedContact = await Contact.findByIdAndUpdate(
       req.params.id,
