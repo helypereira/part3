@@ -31,14 +31,12 @@ app.use(express.static('dist'));
 app.use('/api/persons', contactsRouter);
 app.get('/info', getInfo);
 
+// Error handler middleware (must be after routes)
+app.use(errorHandler);
+
 // Serve the frontend for any other route (catch-all)
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
-
-
-
-
-app.use(errorHandler);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
