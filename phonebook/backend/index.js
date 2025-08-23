@@ -5,6 +5,7 @@ import connectDB from './utils/config.js';
 import 'dotenv/config';
 import contactsRouter from './routes/contacts.js';
 import { getInfo } from './controllers/contacts.js';
+import errorHandler from './middleware/errorHandler.js';
 
 console.log('MONGODB_URI:', process.env.MONGODB_URI ? 'Loaded' : 'NOT LOADED');
 console.log('PORT:', process.env.PORT);
@@ -24,5 +25,10 @@ app.use(express.static('dist'));
 // Routes
 app.use('/api/contacts', contactsRouter);
 app.get('/info', getInfo);
+
+
+
+
+app.use(errorHandler);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
