@@ -1,20 +1,19 @@
 import Contact from '../models/contact.js';
 
 // Obtain all contacts
-export const getContacts = async (req, res) => {
+export const getContacts = async (req, res, next) => {
   try {
     console.log('Fetching contacts from database...');
     const contacts = await Contact.find({});
     console.log(`Found ${contacts.length} contacts`);
     res.json(contacts);
   } catch (error) {
-    console.error('Error fetching contacts:', error);
-    res.status(500).json({ error: error.message });
+    next(error);
   }
 };
 
 // Obtain a contact by ID
-export const getContactById = async (req, res) => {
+export const getContactById = async (req, res, next) => {
   try {
     const contact = await Contact.findById(req.params.id);
     if (!contact) {
@@ -22,13 +21,12 @@ export const getContactById = async (req, res) => {
     }
     res.json(contact);
   } catch (error) {
-    console.error('Error fetching contact:', error);
-    res.status(400).json({ error: 'Invalid contact ID' });
+    next(error);
   }
 };
 
 // Create a new contact
-export const createContact = async (req, res) => {
+export const createContact = async (req, res, next) => {
   try {
     const { name, number } = req.body;
 
@@ -52,13 +50,14 @@ export const createContact = async (req, res) => {
     console.log(`Contact created: ${savedContact.name}`);
     res.status(201).json(savedContact);
   } catch (error) {
-    console.error('Error creating contact:', error);
-    res.status(400).json({ error: error.message });
+    //console.error('Error creating contact:', error);
+    //res.status(400).json({ error: error.message });
+    next(error);
   }
 };
 
 // Update a contact
-export const updateContact = async (req, res) => {
+export const updateContact = async (req, res, next) => {
   try {
     const { name, number } = req.body;
 
@@ -75,13 +74,14 @@ export const updateContact = async (req, res) => {
     console.log(`Contact updated: ${updatedContact.name}`);
     res.json(updatedContact);
   } catch (error) {
-    console.error('Error updating contact:', error);
-    res.status(400).json({ error: error.message });
+    // console.error('Error updating contact:', error);
+    // res.status(400).json({ error: error.message });
+    next(error);
   }
 };
 
 // Delete a contact (3.15)
-export const deleteContact = async (req, res) => {
+export const deleteContact = async (req, res, next) => {
   try {
     const deletedContact = await Contact.findByIdAndDelete(req.params.id);
     
@@ -92,13 +92,12 @@ export const deleteContact = async (req, res) => {
     console.log(`Contact deleted: ${deletedContact.name}`);
     res.json(deletedContact);
   } catch (error) {
-    console.error('Error deleting contact:', error);
-    res.status(400).json({ error: 'Invalid contact ID' });
+    next(error);
   }
 };
 
 // Obtain information about the API
-export const getInfo = async (req, res) => {
+export const getInfo = async (req, res, next) => {
   try {
     const contactCount = await Contact.countDocuments({});
     const currentTime = new Date().toString();
@@ -110,7 +109,8 @@ export const getInfo = async (req, res) => {
       </div>
     `);
   } catch (error) {
-    console.error('Error getting info:', error);
-    res.status(500).json({ error: error.message });
+    // console.error('Error getting info:', error);
+    // res.status(500).json({ error: error.message });
+    next(error);
   }
 };
